@@ -1,0 +1,85 @@
+/* CSS declarations go here */
+
+body {
+  background-color: black;
+  font-family: 'Press Start 2P', cursive;
+}
+
+h1, h2, p {
+  color: white;
+  text-align: center;
+}
+
+h1.game-name {
+  font-size: 80px;
+  margin-bottom: 200px;
+}
+
+img {
+  width: 90px;
+  padding-right: 50px;
+}
+
+p.menu-item {
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+p.game-start:before {
+  content: '\25b6\00a0';
+}
+
+p.game-start:after {
+  content: '\00a0\25C0';
+}
+
+p.game-start {
+  animation: pulse 1s linear infinite;
+  -webkit-animation: pulse 1s linear infinite;
+  -moz-animation: pulse 1s linear infinite;
+}
+
+@keyframes pulse {
+   0% {
+      color: rgba(250, 25, 25, 1);
+   }
+   90% {
+      color: rgba(255,0,0,0.0);
+   }
+   100% {
+      color: rgba(255,0,0,1.0);
+   }
+}
+
+@-moz-keyframes pulse {
+ 0% {
+   color: rgba(165, 25, 25, 1);
+ }
+ 90% {
+   color: rgba(255,0,0,0.0);
+ }
+ 100% {
+   color: rgba(255,0,0,1.0);
+ }
+
+}
+
+@-webkit-keyframes pulse {
+ 0% {
+   color: rgba(165, 25, 25, 1);
+ }
+ 90% {
+   color: rgba(255,0,0,0.0);
+ }
+ 100% {
+   color: rgba(255,0,0,1.0);
+ }
+
+}
+
+.game-credits {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+}
