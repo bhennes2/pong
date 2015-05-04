@@ -6,13 +6,10 @@ if (Meteor.isServer) {
 
 if (Meteor.isClient) {
 
-  Template.home.events({
-
-    "click": function (event) {
+  Template.body.events({
+    "click": function(event){
       event.preventDefault();
-      alert("Let's play!");
     }
-
   });
 
 }
