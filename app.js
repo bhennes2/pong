@@ -12,4 +12,14 @@ if (Meteor.isClient) {
     }
   });
 
+  Router.route('/', {
+    name: 'Home',
+    template: 'Home'
+  });
+
+  Router.route('/play_game', {
+    name: 'PlayGame',
+    template: 'PlayGame'
+  });
+
 }

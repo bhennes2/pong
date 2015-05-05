@@ -40,6 +40,11 @@ p.game-start {
   -moz-animation: pulse 1s linear infinite;
 }
 
+p.game-start a {
+  color: white;
+  text-decoration: none;
+}
+
 @keyframes pulse {
    0% {
       color: rgba(250, 25, 25, 1);
@@ -83,4 +88,23 @@ p.game-start {
   bottom: 20px;
   left: 0;
   right: 0;
+}
+
+.player-container {
+  width: 49%;
+  height: 800px;
+}
+
+.player-container .score {
+  font-size: 144px;
+  margin-top: 300px;
+}
+
+.left {
+  float: left;
+  border-right: 5px solid white;
+}
+
+.right {
+  float: right;
 }
