@@ -6,9 +6,12 @@ if (Meteor.isServer) {
 
 if (Meteor.isClient) {
 
-  Template.body.events({
-    "click": function(event){
-      event.preventDefault();
+  $(document).on('keyup', function (e) {
+    if (e.charCode == 0){
+      $('.score').each(function(i, el){
+        var value = $(el).text();
+        $(el).text(parseInt(value) + 1);
+      });
     }
   });
 
@@ -23,3 +26,4 @@ if (Meteor.isClient) {
   });
 
 }
+
