@@ -156,3 +156,7 @@ p.game-start a {
   margin: 5px;
   padding: 10px;
 }
+
+.hide {
+  display: none;
+}

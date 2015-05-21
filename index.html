@@ -13,9 +13,7 @@
   <h1 class="game-name">
     <img src="/rocket.png" />PONG
   </h1>
-  <p class="menu-item game-start">
-    <a href="/play_game">Play</a>
-  </p>
+  {{>PlayGameLink}}
   <p class="menu-item">Leaders</p>
   <p class="game-credits">&copy; LaunchPad Lab 2015</p>
 </template>
@@ -25,16 +23,16 @@
     <div class="player-container left">
       <p class="player-name">Player 1</p>
       <h1 class="score">0</h1>
-      <span class="serving-message">Serving</span>
+      <span class="serving-message hide">Serving</span>
     </div>
     <div class="player-container right">
       <p class="player-name">Player 2</p>
       <h1 class="score">0</h1>
-      <span class="serving-message">Serving</span>
+      <span class="serving-message hide">Serving</span>
     </div>
-  </div>
-  <div class="game-message">
-    <p>Who serves first?</p>
+    <div class="game-message">
+      <p>Who serves first?</p>
+    </div>
   </div>
 </template>
 
