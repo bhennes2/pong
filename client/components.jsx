@@ -1,10 +1,12 @@
+Navigation = ReactRouter.Navigation;
+
 var KeyHandler = {
 
   componentDidMount: function() {
     var currentKey = -1,
         time = -1;
 
-    function handleKeyDown(event) {
+    var myHandleKeyDown = function handleKeyDown(event) {
       if (event.keyCode !== 65 && event.keyCode !== 66) {
         return;
       }
@@ -13,9 +15,9 @@ var KeyHandler = {
         currentKey = event.keyCode;
         time = Date.now();
       }
-    }
+    }.bind(this);
 
-    function handleKeyUp(event) {
+    var myHandleKeyUp = function handleKeyUp(event) {
       if (event.keyCode !== 65 && event.keyCode !== 66) {
         return;
       }
@@ -29,25 +31,49 @@ var KeyHandler = {
         currentKey = -1;
         time = -1;
       }
-    }
+    }.bind(this);
 
-    window.addEventListener('keydown', handleKeyDown.bind(this));
-    window.addEventListener('keyup', handleKeyUp.bind(this));
+    window.addEventListener('keydown', myHandleKeyDown);
+    window.addEventListener('keyup', myHandleKeyUp);
+
+    this.setState({
+      handleKeyDown: myHandleKeyDown,
+      handleKeyUp: myHandleKeyUp
+    });
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('keydown', this.state.handleKeyDown);
+    window.removeEventListener('keyup', this.state.handleKeyUp);
   }
 };
 
-var MenuHandler = {
+Menu = React.createClass({
+  mixins: [KeyHandler, Navigation],
+
   hold: function(keyCode) {
-    this.transitionTo(this.state.links[this.state.selected]);
+    var item = this.props.items[this.state.selected];
+    this.transitionTo(item.target, item.query);
   },
 
   tap: function(keyCode) {
-    var selected = (this.state.selected + 1) % this.state.links.length;
+    var selected = (this.state.selected + 1) % this.props.items.length;
     this.setState({selected: selected});
-  }
-};
+  },
 
-Navigation = ReactRouter.Navigation;
+  getInitialState: function() {
+    return { selected: 0 };
+  },
+
+  render: function() {
+    var menuItems = this.props.items.map(function(item, idx) {
+      var selected = (this.state.selected === idx);
+      return <MenuItem title={item.title} selected={selected} />;
+    }, this);
+
+    return <div>{menuItems}</div>;
+  }
+});
 
 MenuItem = React.createClass({
   render: function() {
@@ -61,27 +87,23 @@ MenuItem = React.createClass({
 });
 
 MainMenu = React.createClass({
-  mixins: [KeyHandler, MenuHandler, Navigation],
 
   getInitialState: function() {
     return {
-      selected: 0,
-      links: ['play', 'leaders']
+      links: [
+        { title: 'Play',    target: '/game/new'},
+        { title: 'Leaders', target: '/leaders'}
+      ]
     };
   },
 
   render: function() {
-    var menuItems = this.state.links.map(function(link, idx) {
-      var selected = (this.state.selected === idx);
-      return <MenuItem title={link} selected={selected} />;
-    }, this);
-
     return (
       <div>
         <h1 className="game-name">
           <img src="/rocket.png" />PONG
         </h1>
-        {menuItems}
+        <Menu items={this.state.links} />
         <p className="game-credits">&copy; LaunchPad Lab 2015</p>
       </div>
     );
@@ -89,21 +111,14 @@ MainMenu = React.createClass({
 });
 
 Leaders = React.createClass({
-  mixins: [KeyHandler, MenuHandler, Navigation],
 
   getInitialState: function() {
     return {
-      selected: 0,
-      links: ['main']
+      links: [{title: 'Main Menu', target: '/main'}]
     };
   },
 
   render: function() {
-    var menuItems = this.state.links.map(function(link, idx) {
-      var selected = (this.state.selected === idx);
-      return <MenuItem title={link} selected={selected} />;
-    }, this);
-
     return (
       <div>
         <h1 className="game-name">
@@ -114,7 +129,7 @@ Leaders = React.createClass({
           <li>Ryan</li>
           <li>Brendan</li>
         </ul>
-        {menuItems}
+        <Menu items={this.state.links} />
         <p className="game-credits">&copy; LaunchPad Lab 2015</p>
       </div>
     );
@@ -127,7 +142,7 @@ Play = React.createClass({
   hold: function(keyCode) {},
 
   tap: function(keyCode) {
-    if (this.state.selected === -1 || this.state.end) {
+    if (this.state.end) {
       return;
     }
 
@@ -153,8 +168,8 @@ Play = React.createClass({
     this.setState(state);
   },
 
-  selectPlayer: function(playerIdx) {
-    this.setState({selected: playerIdx});
+  componentDidMount: function() {
+    this.setState({selected: Number(this.props.location.query.server)})
   },
 
   getInitialState: function() {
@@ -167,7 +182,6 @@ Play = React.createClass({
   },
 
   render: function() {
-    var serving = this.state.selected === -1 ? <ServingMenu select={this.selectPlayer}/> : '';
     var winner = this.state.player1 > this.state.player2 ? '1' : '2';
     var end = this.state.end ? <EndGameMessage winner={"Player " + winner}/> : '';
 
@@ -183,7 +197,6 @@ Play = React.createClass({
           <h1 className="score">{this.state.player2}</h1>
           <ServingMessage show={this.state.selected === 1} />
         </div>
-        {serving}
         {end}
       </div>
     );
@@ -191,34 +204,31 @@ Play = React.createClass({
 });
 
 ServingMenu = React.createClass({
-  mixins: [KeyHandler],
 
   getInitialState: function() {
     return {
-      selected: 0,
-      players: ['Player 1', 'Player 2']
+      links: [
+        { title: 'Player 1', target: '/game/1', query: { server: 0} },
+        { title: 'Player 2', target: '/game/1', query: { server: 1} }
+      ]
     };
   },
 
-  hold: function(keyCode) {
-    this.props.select(this.state.selected)
-  },
-
-  tap: function(keyCode) {
-    var selected = (this.state.selected + 1) % this.state.players.length;
-    this.setState({selected: selected});
-  },
-
   render: function() {
-    var menuItems = this.state.players.map(function(player, idx) {
-      var selected = (this.state.selected === idx);
-      return <MenuItem title={player} selected={selected} />;
-    }, this);
-
     return (
-      <div className="game-message">
-        <p>Who serves first?</p>
-        {menuItems}
+      <div className="game-container">
+        <div className="player-container left">
+          <p className="player-name">Player 1</p>
+          <h1 className="score">0</h1>
+        </div>
+        <div className="player-container right">
+          <p className="player-name">Player 2</p>
+          <h1 className="score">0</h1>
+        </div>
+        <div className="game-message">
+          <p>Who serves first?</p>
+          <Menu items={this.state.links} />
+        </div>
       </div>
     );
   }
@@ -235,12 +245,13 @@ ServingMessage = React.createClass({
 });
 
 EndGameMessage = React.createClass({
-  mixins: [KeyHandler, MenuHandler, Navigation],
 
   getInitialState: function() {
     return {
-      selected: 0,
-      links: ['main']
+      links: [
+        { title: 'Play Again', target: '/game/new' },
+        { title: 'Main Menu', target: '/main' }
+      ]
     };
   },
 
@@ -248,7 +259,7 @@ EndGameMessage = React.createClass({
     return (
       <div className="game-message">
         <p>{this.props.winner} Wins!</p>
-        <MenuItem title="New Game" selected={true} />
+        <Menu items={this.state.links} />
       </div>
     );
   }

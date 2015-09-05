@@ -14,7 +14,8 @@ Routes = React.createClass({
         <Route component={App}>
           <Route path="main" component={MainMenu} />
           <Route path="leaders" component={Leaders} />
-          <Route path="play" component={Play} />
+          <Route path="game/new" component={ServingMenu} />
+          <Route path="game/:id" component={Play} />
         </Route>
         <Redirect from="/" to="/main" />
       </Router>
