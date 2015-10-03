@@ -1,19 +1,20 @@
 EndGameMessage = React.createClass({
 
-  getInitialState: function() {
-    return {
-      links: [
-        { title: 'Play Again', target: '/game/new' },
-        { title: 'Main Menu', target: '/main' }
-      ]
-    };
+  propTypes: {
+    winner: React.PropTypes.string
   },
 
   render: function() {
+
+    var menuItems = [
+      { title: "Play Again", target: "/game/new" },
+      { title: "Main Menu", target: "/main" }
+    ];
+
     return (
       <div className="game-message">
         <p>{this.props.winner} Wins!</p>
-        <Menu items={this.state.links} />
+        <Menu items={menuItems}/>
       </div>
     );
   }

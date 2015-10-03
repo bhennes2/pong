@@ -1,12 +1,11 @@
 Leaders = React.createClass({
 
-  getInitialState: function() {
-    return {
-      links: [{title: 'Main Menu', target: '/main'}]
-    };
-  },
-
   render: function() {
+
+    var menuItems = [
+      { title: "Main Menu", target: "/main" }
+    ];
+
     return (
       <div>
         <h1 className="game-name">
@@ -17,7 +16,7 @@ Leaders = React.createClass({
           <li>Ryan</li>
           <li>Brendan</li>
         </ul>
-        <Menu items={this.state.links} />
+        <Menu items={menuItems}/>
         <p className="game-credits">&copy; LaunchPad Lab 2015</p>
       </div>
     );

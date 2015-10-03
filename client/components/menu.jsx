@@ -1,6 +1,10 @@
 Menu = React.createClass({
   mixins: [KeyHandler, ReactRouter.Navigation],
 
+  propTypes: {
+    items: React.PropTypes.array
+  },
+
   hold: function(keyCode) {
     var item = this.props.items[this.state.selected];
     this.transitionTo(item.target, item.query);
@@ -16,6 +20,7 @@ Menu = React.createClass({
   },
 
   render: function() {
+
     var menuItems = this.props.items.map(function(item, idx) {
       var selected = (this.state.selected === idx);
       return <Menu.Item title={item.title} selected={selected} />;
@@ -26,6 +31,12 @@ Menu = React.createClass({
 });
 
 Menu.Item = React.createClass({
+
+  propTypes: {
+    title:    React.PropTypes.string,
+    selected: React.PropTypes.boolean
+  },
+
   render: function() {
     var cx = React.addons.classSet;
     var classes = cx({
