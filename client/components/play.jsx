@@ -1,5 +1,6 @@
 Play = React.createClass({
-  mixins: [KeyHandler],
+
+  mixins: [KeyHandler, ReactMeteorData],
 
   hold(keyCode) {},
 
@@ -34,6 +35,13 @@ Play = React.createClass({
     this.setState({selected: Number(this.props.location.query.server)})
   },
 
+  getMeteorData() {
+
+    return {
+      game: Games.findOne(this.props.params.id)
+    };
+  },
+
   getInitialState() {
 
     return {
@@ -46,18 +54,18 @@ Play = React.createClass({
 
   render() {
 
-    var winner = this.state.player1 > this.state.player2 ? '1' : '2';
-    var end = this.state.end ? <EndGameMessage winner={"Player " + winner}/> : '';
+    var winner = this.state.player1 > this.state.player2 ? this.data.game.player1 : this.data.game.player2;
+    var end = this.state.end ? <EndGameMessage winner={winner}/> : '';
 
     return (
       <div className="game-container">
         <div className="player-container left">
-          <p className="player-name">Player 1</p>
+          <p className="player-name">{this.data.game.player1}</p>
           <h1 className="score">{this.state.player1}</h1>
           <ServingMessage show={this.state.selected === 0} />
         </div>
         <div className="player-container right">
-          <p className="player-name">Player 2</p>
+          <p className="player-name">{this.data.game.player2}</p>
           <h1 className="score">{this.state.player2}</h1>
           <ServingMessage show={this.state.selected === 1} />
         </div>

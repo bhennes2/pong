@@ -1,5 +1,11 @@
 Leaders = React.createClass({
 
+  mixins: [ReactRouter.Navigation],
+
+  onSelect(item) {
+    this.transitionTo(item.target);
+  },
+
   render() {
 
     var menuItems = [
@@ -16,7 +22,11 @@ Leaders = React.createClass({
           <li>Ryan</li>
           <li>Brendan</li>
         </ul>
-        <Menu items={menuItems}/>
+        <Menu
+          items={menuItems}
+          listens={[KeyCode.Left, KeyCode.Right]}
+          onSelect={this.onSelect}
+        />
         <p className="game-credits">&copy; LaunchPad Lab 2015</p>
       </div>
     );

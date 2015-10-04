@@ -14,7 +14,7 @@ EndGameMessage = React.createClass({
     return (
       <div className="game-message">
         <p>{this.props.winner} Wins!</p>
-        <Menu items={menuItems}/>
+        <Menu items={menuItems} listens={[KeyCode.Left, KeyCode.Right]}/>
       </div>
     );
   }

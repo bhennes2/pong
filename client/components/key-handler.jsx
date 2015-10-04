@@ -1,3 +1,8 @@
+KeyCode = {
+  Left: 65,
+  Right: 66
+}
+
 KeyHandler = {
 
   componentDidMount: function() {
