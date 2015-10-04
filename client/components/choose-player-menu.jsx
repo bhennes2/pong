@@ -1,11 +1,19 @@
-ServingMenu = React.createClass({
+ChoosePlayerMenu = React.createClass({
+
+  mixins: [ReactMeteorData],
+
+  getMeteorData() {
+
+    return {
+      players: Players.find({}).fetch()
+    };
+  },
 
   render() {
 
-    var menuItems = [
-      { title: "Player 1", target: "/game/1", query: {server: 0} },
-      { title: "Player 2", target: "/game/1", query: {server: 1} }
-    ];
+    var menuItems = this.data.players.map((player) => {
+      return { title: player.name };
+    });
 
     return (
       <div className="game-container">

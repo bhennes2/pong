@@ -1,9 +1,9 @@
 Play = React.createClass({
   mixins: [KeyHandler],
 
-  hold: function(keyCode) {},
+  hold(keyCode) {},
 
-  tap: function(keyCode) {
+  tap(keyCode) {
     if (this.state.end) {
       return;
     }
@@ -30,11 +30,12 @@ Play = React.createClass({
     this.setState(state);
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.setState({selected: Number(this.props.location.query.server)})
   },
 
-  getInitialState: function() {
+  getInitialState() {
+
     return {
       player1: 0,
       player2: 0,
@@ -43,7 +44,8 @@ Play = React.createClass({
     };
   },
 
-  render: function() {
+  render() {
+
     var winner = this.state.player1 > this.state.player2 ? '1' : '2';
     var end = this.state.end ? <EndGameMessage winner={"Player " + winner}/> : '';
 

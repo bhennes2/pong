@@ -1,10 +1,10 @@
 EndGameMessage = React.createClass({
 
   propTypes: {
-    winner: React.PropTypes.string
+    winner: React.PropTypes.string.isRequired
   },
 
-  render: function() {
+  render() {
 
     var menuItems = [
       { title: "Play Again", target: "/game/new" },

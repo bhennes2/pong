@@ -1,6 +1,6 @@
 Leaders = React.createClass({
 
-  render: function() {
+  render() {
 
     var menuItems = [
       { title: "Main Menu", target: "/main" }

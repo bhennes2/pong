@@ -1,8 +1,7 @@
 App = React.createClass({
-  getInitialState: function() {
-      return {};
-  },
-  render: function () {
+
+  render() {
+
     return (
       <div>
         {this.props.children}

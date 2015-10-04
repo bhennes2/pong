@@ -5,16 +5,15 @@ var {
 } = ReactRouter;
 
 Routes = React.createClass({
-  getInitialState: function() {
-    return {};
-  },
-  render: function () {
+
+  render() {
+
     return (
       <Router history={ReactRouter.lib.BrowserHistory.history}>
         <Route component={App}>
           <Route path="main" component={MainMenu} />
           <Route path="leaders" component={Leaders} />
-          <Route path="game/new" component={ServingMenu} />
+          <Route path="game/new" component={ChoosePlayerMenu} />
           <Route path="game/:id" component={Play} />
         </Route>
         <Redirect from="/" to="/main" />
@@ -22,3 +21,5 @@ Routes = React.createClass({
     );
   }
 });
+
+// <Route path="game/new" component={ServingMenu} />

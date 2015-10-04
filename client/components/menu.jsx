@@ -5,25 +5,25 @@ Menu = React.createClass({
     items: React.PropTypes.array
   },
 
-  hold: function(keyCode) {
+  hold(keyCode) {
     var item = this.props.items[this.state.selected];
     this.transitionTo(item.target, item.query);
   },
 
-  tap: function(keyCode) {
+  tap(keyCode) {
     var selected = (this.state.selected + 1) % this.props.items.length;
     this.setState({selected: selected});
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return { selected: 0 };
   },
 
-  render: function() {
+  render() {
 
     var menuItems = this.props.items.map(function(item, idx) {
       var selected = (this.state.selected === idx);
-      return <Menu.Item title={item.title} selected={selected} />;
+      return <Menu.Item title={item.title} selected={selected} key={"item"+idx}/>;
     }, this);
 
     return <div>{menuItems}</div>;
@@ -37,7 +37,8 @@ Menu.Item = React.createClass({
     selected: React.PropTypes.boolean
   },
 
-  render: function() {
+  render() {
+
     var cx = React.addons.classSet;
     var classes = cx({
       'menu-item': true,

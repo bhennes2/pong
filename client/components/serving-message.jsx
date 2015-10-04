@@ -1,10 +1,11 @@
 ServingMessage = React.createClass({
 
   propTypes: {
-    show: React.PropTypes.bool
+    show: React.PropTypes.bool.isRequired
   },
 
-  render: function() {
+  render() {
+
     var classes = 'serving-message';
     if (!this.props.show){
       classes += ' hide';
