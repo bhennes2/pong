@@ -49,6 +49,18 @@ p.game-start a {
   text-decoration: none;
 }
 
+p.menu-item.selected {
+  color: rgba(44, 52, 167, 1);
+}
+
+p.menu-item.selected:before {
+  content: '\25b6\00a0';
+}
+
+p.menu-item.selected:after {
+  content: '\00a0\25C0';
+}
+
 @keyframes pulse {
    0% {
       color: rgba(250, 25, 25, 1);
