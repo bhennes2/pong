@@ -22,10 +22,12 @@ insecure                # Allow all DB writes from clients (for prototyping)
 react
 meteorhacks:npm
 cosmos:browserify
-npm-container
 logging
 reload
 random
 ejson
 spacebars
 check
+
+
+npm-container
