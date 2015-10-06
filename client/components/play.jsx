@@ -19,6 +19,8 @@ Play = React.createClass({
       Meteor.call("updateScore", this.data.game._id, player1Score, ++player2Score);
     }
 
+
+    // refactor
     if (this.isOver(player1Score, player2Score)) {
       let winner = player1Score > player2Score ? this.data.player1 : this.data.player2;
       Meteor.call("updateRecord", winner._id, winner.wins + 1, winner.losses);
