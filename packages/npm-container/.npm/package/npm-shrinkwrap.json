@@ -155,19 +155,8 @@
       }
     },
     "react-router": {
-      "version": "1.0.0-rc1",
+      "version": "1.0.0-beta3",
       "dependencies": {
-        "history": {
-          "version": "1.9.0",
-          "dependencies": {
-            "deep-equal": {
-              "version": "1.0.1"
-            },
-            "qs": {
-              "version": "4.0.0"
-            }
-          }
-        },
         "invariant": {
           "version": "2.1.1",
           "dependencies": {
@@ -181,18 +170,14 @@
             }
           }
         },
+        "keymirror": {
+          "version": "0.1.1"
+        },
+        "qs": {
+          "version": "2.4.1"
+        },
         "warning": {
-          "version": "2.1.0",
-          "dependencies": {
-            "loose-envify": {
-              "version": "1.0.0",
-              "dependencies": {
-                "js-tokens": {
-                  "version": "1.0.1"
-                }
-              }
-            }
-          }
+          "version": "1.0.2"
         }
       }
     }
