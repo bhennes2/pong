@@ -1,9 +1,5 @@
 /* CSS declarations go here */
 
-html {
-  color: white;
-}
-
 body {
   background: url('/stars.jpg');
   /*background-color: black;*/
@@ -11,7 +7,7 @@ body {
 }
 
 h1, h2, p {
-  /*color: white;*/
+  color: white;
   text-align: center;
 }
 
