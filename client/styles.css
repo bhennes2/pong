@@ -50,7 +50,7 @@ p.game-start a {
 }
 
 p.menu-item.selected {
-  color: rgba(44, 52, 167, 1);
+  color: rgba(28, 148, 1, 1);
 }
 
 p.menu-item.selected:before {
@@ -171,6 +171,32 @@ p.menu-item.selected:after {
   border-radius: 5px;
   margin: 5px;
   padding: 10px;
+}
+
+/* Leader Board */
+.leader-board-title {
+  font-size: 80px;
+  margin-bottom: 70px;
+}
+
+.leader-board {
+  list-style-type: none;
+  font-size: 50px;
+  margin: auto;
+  width: 65%;
+}
+
+.leader-board li {
+  margin-bottom: 20px;
+}
+
+.leader-board .name {
+  text-align: left;
+}
+
+.leader-board .record {
+  text-align: right;
+  float: right;
 }
 
 .hide {

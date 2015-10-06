@@ -6,7 +6,8 @@ Menu = React.createClass({
     items:      React.PropTypes.array,
     listens:    React.PropTypes.array.isRequired,
     onSelect:   React.PropTypes.func,
-    onUnSelect: React.PropTypes.func
+    onUnSelect: React.PropTypes.func,
+    forceReset: React.PropTypes.boolean
   },
 
   hold(keyCode) {
@@ -54,6 +55,12 @@ Menu = React.createClass({
 
   getInitialState() {
     return { highlighted: 0, selected: -1 };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.forceReset === true) {
+      this.setState({ highlighted: 0, selected: -1 });
+    }
   },
 
   render() {
