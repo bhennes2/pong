@@ -173,6 +173,32 @@ p.menu-item.selected:after {
   padding: 10px;
 }
 
+/* Leader Board */
+.leader-board-title {
+  font-size: 80px;
+  margin-bottom: 70px;
+}
+
+.leader-board {
+  list-style-type: none;
+  font-size: 50px;
+  margin: auto;
+  width: 65%;
+}
+
+.leader-board li {
+  margin-bottom: 20px;
+}
+
+.leader-board .name {
+  text-align: left;
+}
+
+.leader-board .record {
+  text-align: right;
+  float: right;
+}
+
 .hide {
   display: none;
 }
