@@ -25,6 +25,8 @@ Play = React.createClass({
 
       let loser = player1Score > player2Score ? this.data.player2 : this.data.player1;
       Meteor.call("updateRecord", loser._id, loser.wins, loser.losses + 1);
+
+      Meteor.call("slackTaunt", winner);
     }
   },
 
