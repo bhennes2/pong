@@ -2,32 +2,30 @@ ChoosePlayerMenu = React.createClass({
 
   mixins: [ReactMeteorData, ReactRouter.Navigation],
 
-  selectPlayer1(item) {
-    this.player1 = item.title;
+  selectPlayer(player, id) {
+    this[player + "Id"] = id;
 
-    if (this.player1 && this.player2) {
-      console.log('game time')
-      gameId = Games.insert({player1: this.player1, player2: this.player2});
-      this.transitionTo('/game/' + gameId);
+    if (this.player1Id && this.player2Id) {
+      Meteor.call("newGame", this.player1Id, this.player2Id, (_,gameId) => {
+        this.transitionTo('/game/' + gameId);
+      });
     }
+  },
+
+  selectPlayer1(item) {
+    this.selectPlayer("player1", item.id);
   },
 
   selectPlayer2(item) {
-    this.player2 = item.title;
-
-    if (this.player1 && this.player2) {
-      console.log('game time')
-      gameId = Games.insert({player1: this.player1, player2: this.player2});
-      this.transitionTo('/game/' + gameId);
-    }
+    this.selectPlayer("player2", item.id);
   },
 
   unSelectPlayer1(item) {
-    this.player1 = null;
+    this.player1Id = null;
   },
 
   unSelectPlayer2(item) {
-    this.player2 = null;
+    this.player2Id = null;
   },
 
   getMeteorData() {
@@ -39,8 +37,8 @@ ChoosePlayerMenu = React.createClass({
 
   render() {
 
-    var menuItems = this.data.players.map((player) => {
-      return { title: player.name };
+    let menuItems = this.data.players.map((player) => {
+      return { title: player.name, id: player._id };
     });
 
     return (

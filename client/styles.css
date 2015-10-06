@@ -50,7 +50,7 @@ p.game-start a {
 }
 
 p.menu-item.selected {
-  color: rgba(44, 52, 167, 1);
+  color: rgba(28, 148, 1, 1);
 }
 
 p.menu-item.selected:before {
