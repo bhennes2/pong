@@ -50,6 +50,8 @@ StandingsBoard.Items = React.createClass({
 
   render() {
 
+    var Link = ReactRouter.Link;
+
     var players = this.props.players.map(function(player, idx) {
 
       return (
@@ -61,7 +63,9 @@ StandingsBoard.Items = React.createClass({
           <td>{this.winningPct(player)}</td>
           <td></td>
           <td></td>
-          <td><a href={ "/players/" + player.id }>Details</a></td>
+          <td>
+            <Link to={`/players/${player._id}`}>Details</Link>
+          </td>
         </tr>
       );
 
@@ -71,10 +75,3 @@ StandingsBoard.Items = React.createClass({
   }
 
 });
-
-        // <Menu.Item
-        //   title={item.title}
-        //   highlighted={highlighted}
-        //   selected={selected}
-        //   key={"item"+idx}
-        // />
