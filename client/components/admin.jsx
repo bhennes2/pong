@@ -6,6 +6,7 @@ Admin = React.createClass({
 
     return (
       <div>
+        <Alert />
         <nav className="navbar">
           <div className="container">
             <ul className="navbar-list">

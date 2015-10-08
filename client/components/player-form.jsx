@@ -11,9 +11,10 @@ PlayerForm = React.createClass({
 
   submitForm(event){
     event.preventDefault();
-    Players.update(this.props.params.id, { $set: { name: , email: , taunt: } });
-    console.log(this);
-    // this.transitionTo(item.target);
+    let id = this.props.params.id;
+    Players.update(this.props.params.id, { $set: { name: this.props.name, email: this.props.email, taunt: this.props.taunt } });
+    // displayAlert({ message: 'Player successfully udpated!' })
+    this.transitionTo('/players/' + id);
   },
 
   handleChange(event){
@@ -47,11 +48,11 @@ PlayerForm = React.createClass({
             </div>
             <div className="six columns">
               <label>Email</label>
-              <input name="email" className="u-full-width" type="email" defaultValue={player.email} placeholder="test@mailbox.com" />
+              <input name="email" onChange={this.handleChange} className="u-full-width" type="email" defaultValue={player.email} placeholder="test@mailbox.com" />
             </div>
           </div>
           <label>Taunt Message</label>
-          <textarea name="taunt" className="u-full-width" placeholder="Hi Dave …" defaultValue={player.taunt}></textarea>
+          <textarea onChange={this.handleChange} name="taunt" className="u-full-width" placeholder="Hi Dave …" defaultValue={player.taunt}></textarea>
           <input className="button-primary" type="submit" value="Update" />
         </form>
       </div>
