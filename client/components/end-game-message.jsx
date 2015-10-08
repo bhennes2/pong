@@ -7,14 +7,20 @@ EndGameMessage = React.createClass({
   },
 
   onSelect(item) {
-    this.transitionTo(item.target);
+    if (item.action === "main") {
+      this.transitionTo("/main");
+    } else {
+      Meteor.call("newGame", this.props.game.player1, this.props.game.player2, (_,gameId) => {
+        this.transitionTo('/game/' + gameId);
+      });
+    }
   },
 
   render() {
 
     var menuItems = [
-      { title: "Play Again", target: "/game/new" },
-      { title: "Main Menu", target: "/main" }
+      { title: "Play Again", action: "new" },
+      { title: "Main Menu", action: "main"}
     ];
 
     return (

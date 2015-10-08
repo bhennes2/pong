@@ -49,8 +49,8 @@ Play = React.createClass({
 
   render() {
     let game = this.data.game;
-    let winner = game.winner ? game.winner === this.data.player1 ? this.data.player1.name : this.data.player2.name : '';
-    let end = game.inProgress ? '' : <EndGameMessage winner={winner}/>;
+    let winner = game.winner ? game.winner === this.data.player1._id ? this.data.player1 : this.data.player2 : '';
+    let end = game.inProgress ? '' : <EndGameMessage game={game} winner={winner}/>;
 
     return (
       <div className="game-container">

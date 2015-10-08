@@ -157,12 +157,12 @@ p.menu-item.selected:after {
 
 .game-message {
   position: absolute;
-  left: 38%;
+  left: 23%;
   top: 36%;
   padding: 0px;
   border: 5px solid white;
   border-radius: 5px;
-  width: 300px;
+  width: 500px;
   background: black;
 }
 
