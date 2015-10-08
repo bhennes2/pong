@@ -9,23 +9,17 @@ Play = React.createClass({
     let player1Score = this.data.game.player1Score;
     let player2Score = this.data.game.player2Score;
 
-    if (this.isOver(player1Score, player2Score)) {
+    if (!this.data.game.inProgress) {
       return;
     }
 
     if (keyCode === 65) {
-      Meteor.call("updateScore", this.data.game._id, ++player1Score, player2Score);
+      player1Score++;
     } else {
-      Meteor.call("updateScore", this.data.game._id, player1Score, ++player2Score);
+      player2Score++;
     }
 
-    if (this.isOver(player1Score, player2Score)) {
-      let winner = player1Score > player2Score ? this.data.player1 : this.data.player2;
-      Meteor.call("updateRecord", winner._id, winner.wins + 1, winner.losses);
-
-      let loser = player1Score > player2Score ? this.data.player2 : this.data.player1;
-      Meteor.call("updateRecord", loser._id, loser.wins, loser.losses + 1);
-    }
+    Meteor.call("updateGame", this.data.game, player1Score, player2Score);
   },
 
   currentServer() {
@@ -42,19 +36,6 @@ Play = React.createClass({
     }
   },
 
-  isOver(player1Score, player2Score) {
-    var totalPoints = player1Score + player2Score;
-    var pointDiff = Math.abs(player1Score - player2Score);
-
-    return (player1Score > 20 || player2Score > 20) && pointDiff > 1;
-  },
-
-  winner() {
-    let game = this.data.game;
-
-    return game.player1Score > game.player2Score ? this.data.player1 : this.data.player2;
-  },
-
   getMeteorData() {
 
     let game = Games.findOne(this.props.params.id);
@@ -68,8 +49,8 @@ Play = React.createClass({
 
   render() {
     let game = this.data.game;
-
-    let end = this.isOver(game.player1Score, game.player2Score) ? <EndGameMessage winner={this.winner()}/> : '';
+    let winner = game.winner ? game.winner === this.data.player1 ? this.data.player1.name : this.data.player2.name : '';
+    let end = game.inProgress ? '' : <EndGameMessage winner={winner}/>;
 
     return (
       <div className="game-container">
