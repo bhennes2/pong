@@ -24,6 +24,7 @@ if (Meteor.isServer) {
         player1Score: 15,
         player2Score: 21,
         firstServer: dbPlayers[1],
+        inProgress: false,
         createdAt: new Date()
       });
     }
