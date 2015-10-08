@@ -1,11 +1,23 @@
 Alert = React.createClass({
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({closed: true});
+    }, 1000);
+  },
+
+  getInitialState() {
+    return {
+      closed: false
+    };
+  },
+
   render() {
 
     var cx = React.addons.classSet;
     var classes = cx({
       'alert':    true,
-      'closed':   !this.props.showAlert,
+      'closed':   this.state.closed,
       'alert-success': true
     });
 
