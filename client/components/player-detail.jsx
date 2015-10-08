@@ -26,14 +26,14 @@ PlayerDetail = React.createClass({
   },
 
   alert() {
-    // if (this.props.showAlert){
-    //   return (
-    //     <Alert
-    //       showAlert={this.props.showAlert}
-    //       alertMessage={this.props.alertMessage}
-    //     />
-    //   );
-    // }
+    if (this.props.location.query){
+      return (
+        <Alert
+          showAlert={this.props.location.query.showAlert}
+          alertMessage={this.props.location.query.alertMessage}
+        />
+      );
+    }
   },
 
   render() {
