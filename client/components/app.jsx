@@ -3,7 +3,7 @@ App = React.createClass({
   render() {
 
     return (
-      <div>
+      <div className="in-game">
         {this.props.children}
       </div>
     );

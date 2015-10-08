@@ -11,13 +11,14 @@ body {
   margin-top: 20px;
 }
 
-h1, h2, p {
+.in-game h1, h2, p {
   color: white;
-  /*text-align: center;*/
+  text-align: center;
 }
 
 h1.game-name {
   font-size: 80px;
+  margin-top: 30px;
   margin-bottom: 200px;
 }
 
