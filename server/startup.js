@@ -12,8 +12,20 @@ if (Meteor.isServer) {
         { name: 'Wade',    wins: 1, losses: 1, taunt: 'Muahahaha', email: 'wade@launchpadlab.com'}
       ];
 
-      players.forEach(function (player) {
-        Players.insert(player);
+      var dbPlayers = [];
+
+      players.forEach(function (player, i) {
+        dbPlayers[i] = Players.insert(player);
+      });
+
+      Games.insert({
+        player1: dbPlayers[0],
+        player2: dbPlayers[1],
+        player1Score: 15,
+        player2Score: 21,
+        firstServer: dbPlayers[1],
+        inProgress: false,
+        createdAt: new Date()
       });
     }
   });
