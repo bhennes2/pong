@@ -1,10 +1,5 @@
 Alert = React.createClass({
 
-  displayAlert(params){
-    this.props.showAlert = true;
-    this.props.alertMessage = params.message;
-  },
-
   render() {
 
     var cx = React.addons.classSet;

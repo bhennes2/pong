@@ -50,8 +50,6 @@ StandingsBoard.Items = React.createClass({
 
   render() {
 
-    var Link = ReactRouter.Link;
-
     var players = this.props.players.map(function(player, idx) {
 
       return (

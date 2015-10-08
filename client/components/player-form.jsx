@@ -13,8 +13,7 @@ PlayerForm = React.createClass({
     event.preventDefault();
     let id = this.props.params.id;
     Players.update(this.props.params.id, { $set: { name: this.props.name, email: this.props.email, taunt: this.props.taunt } });
-    // displayAlert({ message: 'Player successfully udpated!' })
-    this.transitionTo('/players/' + id);
+    this.transitionTo('/players/' + id, { alertMessage: "Player successfully updated!", showAlert: true });
   },
 
   handleChange(event){

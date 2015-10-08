@@ -2,11 +2,8 @@ Admin = React.createClass({
 
   render() {
 
-    var Link = ReactRouter.Link;
-
     return (
       <div>
-        <Alert />
         <nav className="navbar">
           <div className="container">
             <ul className="navbar-list">

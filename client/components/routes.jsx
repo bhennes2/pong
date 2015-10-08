@@ -4,6 +4,8 @@ var {
   Redirect
 } = ReactRouter;
 
+Link = ReactRouter.Link;
+
 Routes = React.createClass({
 
   render() {

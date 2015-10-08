@@ -25,6 +25,17 @@ PlayerDetail = React.createClass({
     return n+(s[(v-20)%10]||s[v]||s[0]);
   },
 
+  alert() {
+    // if (this.props.showAlert){
+    //   return (
+    //     <Alert
+    //       showAlert={this.props.showAlert}
+    //       alertMessage={this.props.alertMessage}
+    //     />
+    //   );
+    // }
+  },
+
   render() {
 
     var player = this.data.player,
@@ -33,6 +44,7 @@ PlayerDetail = React.createClass({
     return (
       <div>
         <div className="row">
+          {this.alert()}
           <div className="eleven columns">
             <h4>{player.name}</h4>
             <p>{player.wins}-{player.losses}, {this.getOrdinal(player)} in LaunchPad Lab</p>
