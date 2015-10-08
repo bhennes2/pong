@@ -4,7 +4,8 @@ Dashboard = React.createClass({
 
     return (
       <div>
-        <h4>Current Standings</h4><br/>
+        <h4>LaunchPad Lab</h4>
+        <h6>Current Standings</h6><br/>
         <StandingsBoard />
       </div>
     );

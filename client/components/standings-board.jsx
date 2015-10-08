@@ -4,7 +4,7 @@ StandingsBoard = React.createClass({
 
   getMeteorData() {
     return {
-      players: Players.find().fetch()
+      players: Players.find({}, {sort: {wins: -1}}).fetch()
     };
   },
 

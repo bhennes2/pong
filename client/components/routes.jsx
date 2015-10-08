@@ -18,7 +18,9 @@ Routes = React.createClass({
           <Route path="game/:id/play" component={Play} />
         </Route>
         <Route component={Admin}>
-          <Route path="dashboard"     component={Dashboard} />
+          <Route path="dashboard"           component={Dashboard} />
+          <Route path="players/:id"         component={PlayerDetail} />
+          <Route path="players/:id/edit"    component={PlayerForm} />
         </Route>
         <Redirect from="/" to="/main" />
       </Router>

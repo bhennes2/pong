@@ -13,7 +13,7 @@ body {
 
 h1, h2, p {
   color: white;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 h1.game-name {
@@ -250,4 +250,8 @@ td {
 
 td > a {
   text-decoration: none;
+}
+
+input, textarea {
+  color: black;
 }
