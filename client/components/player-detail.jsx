@@ -35,8 +35,7 @@ PlayerDetail = React.createClass({
 
   render() {
 
-    var player = this.data.player,
-        Link = ReactRouter.Link;
+    var player = this.data.player;
 
     return (
       <div>

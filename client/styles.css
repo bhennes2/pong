@@ -185,7 +185,7 @@ p.menu-item.selected:after {
   list-style-type: none;
   font-size: 50px;
   margin: auto;
-  width: 65%;
+  width: 85%;
 }
 
 .leader-board li {
