@@ -1,0 +1,12 @@
+{
+  "private": {
+    "slack": {
+      "hookUrl": "https://hooks.slack.com/services/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",
+      "defaults": {
+        "channel": "#pong",
+        "username": "RocketPong",
+        "icon_emoji": ":pong:"
+      }
+    }
+  }
+}
