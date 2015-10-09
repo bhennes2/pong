@@ -1,6 +1,8 @@
 Meteor.methods({
 
   slackTaunt(winnerId, loserId) {
+    check(winnerId, String);
+    check(loserId, String);
 
     let slackSettings = Meteor.settings.private.slack;
 
