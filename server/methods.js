@@ -1,19 +1,21 @@
 Meteor.methods({
 
-  slackTaunt(winnerId, loserId) {
+  slackTaunt(game, winnerId, loserId) {
+    check(game, Object);
     check(winnerId, String);
     check(loserId, String);
 
-    let slackSettings = Meteor.settings.private.slack;
+    const slackSettings = Meteor.settings.private.slack;
 
-    let SlackAPI = Meteor.npmRequire( 'node-slack' ),
-        Slack    = new SlackAPI( slackSettings.hookUrl );
+    const SlackAPI = Meteor.npmRequire( 'node-slack' ),
+          Slack    = new SlackAPI( slackSettings.hookUrl );
 
-    let winner = Players.findOne(winnerId)
-    let loser = Players.findOne(loserId)
+    const winner = Players.findOne(winnerId)
+    const loser = Players.findOne(loserId)
 
-    let text = winner.name + " just crushed " + loser.name + "!";
-    let title = winner.name + ' says';
+    const scores = [game.player1Score, game.player2Score].sort((a,b)=>{return b-a;});
+    const text = winner.name + " just crushed " + loser.name + " " + scores[0] + " - " + scores[1] + "!";
+    const title = winner.name + ' says';
 
     Slack.send({
       channel:   slackSettings.defaults.channel,
