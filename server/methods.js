@@ -10,13 +10,23 @@ Meteor.methods({
     let winner = Players.findOne(winnerId)
     let loser = Players.findOne(loserId)
 
-    let text = winner.name + " just crushed " + loser.name + "!" + winner.taunt;
+    let text = winner.name + " just crushed " + loser.name + "!";
+    let title = winner.name + ' says';
 
     Slack.send({
       channel:   slackSettings.defaults.channel,
       username:  slackSettings.defaults.username,
       text:       text,
-      icon_emoji: slackSettings.defaults.icon_emoji
+      icon_emoji: slackSettings.defaults.icon_emoji,
+      attachments: [
+        {
+          fallback: "An error has occurred",
+          color: 'good',
+          fields: [
+            { title: title, value: winner.taunt }
+          ]
+        }
+      ]
     });
   }
 });
