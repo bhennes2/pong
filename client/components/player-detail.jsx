@@ -5,9 +5,9 @@ PlayerDetail = React.createClass({
   getMeteorData() {
     let id = this.props.params.id;
     return {
-      players: Players.find({}, {sort: {wins: -1}}).fetch(),
-      player: Players.findOne({ _id: id }),
-      games: Games.find({}, { sort: {createdAt: -1 }}).fetch()
+      players: Players.find({}).fetch(),
+      player: Players.findOne(id),
+      games: Games.find({$or: [{player1: id}, {player2: id}]}, { sort: {createdAt: -1 }}).fetch()
     };
   },
 
@@ -35,38 +35,45 @@ PlayerDetail = React.createClass({
 
   render() {
 
-    var player = this.data.player;
+    let stuff = '';
 
-    return (
-      <div>
-        <div className="row">
-          {this.alert()}
-          <div className="eleven columns">
-            <h4>{player.name}</h4>
-            <p>{player.wins}-{player.losses}, {this.getOrdinal(player)} in LaunchPad Lab</p>
+    let player = this.data.player;
+
+    if (player) {
+      stuff = (
+        <div>
+          <div className="row">
+            {this.alert()}
+            <div className="eleven columns">
+              <h4>{player.name}</h4>
+              <p>{player.wins}-{player.losses}, {this.getOrdinal(player)} in LaunchPad Lab</p>
+            </div>
+            <div className="one column">
+              <p><Link to={`/players/${player._id}/edit`}>Edit</Link></p>
+            </div>
           </div>
-          <div className="one column">
-            <p><Link to={`/players/${player._id}/edit`}>Edit</Link></p>
-          </div>
+          <table className="u-full-width">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th></th>
+                <th>Opponent</th>
+                <th></th>
+                <th>Score</th>
+                <th></th>
+              </tr>
+            </thead>
+            <PlayerGames
+              players={this.data.players}
+              player={player}
+              games={this.data.games}
+            />
+          </table>
         </div>
-        <table className="u-full-width">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th></th>
-              <th>Opponent</th>
-              <th></th>
-              <th>Score</th>
-              <th></th>
-            </tr>
-          </thead>
-          <PlayerGames
-            player={player}
-            games={this.data.games}
-          />
-        </table>
-      </div>
-    );
+      );
+    }
+
+    return <div>{stuff}</div>;
   }
 });
 
@@ -80,10 +87,12 @@ PlayerGames = React.createClass({
     return [dayNames[date.getDay()], ",", monthNames[date.getMonth()], " ", date.getDate()].join('');
   },
 
-  opponentName(game){
+  opponent(game){
     var player = this.props.player;
     var opponentId = (game.player1 === player._id) ? game.player2 : game.player1;
-    return Players.findOne(opponentId).name;
+    return this.props.players.filter((p) => {
+      return p._id === opponentId;
+    })[0];
   },
 
   outcome(game){
@@ -107,25 +116,21 @@ PlayerGames = React.createClass({
 
   render(){
 
-    var games = this.props.games.map(function(game, idx) {
-      var player = this.props.player;
-      if (game.player1 == player._id || game.player2 == player._id){
-        return (
-          <tr>
-            <td>{this.formatDate(game.createdAt)}</td>
-            <td>vs</td>
-            <td>{this.opponentName(game)}</td>
-            <td>{this.outcome(game)}</td>
-            <td>{game.player1Score} - {game.player2Score}</td>
-            <td>{this.gameComplete(game)}</td>
-          </tr>
-        );
-      }
+    var games = this.props.games.map((game) => {
+      return (
+        <tr>
+          <td>{this.formatDate(game.createdAt)}</td>
+          <td>vs</td>
+          <td>{this.opponent(game).name}</td>
+          <td>{this.outcome(game)}</td>
+          <td>{game.player1Score} - {game.player2Score}</td>
+          <td>{this.gameComplete(game)}</td>
+        </tr>
+      );
 
-    }, this);
+    });
 
     return <tbody>{games}</tbody>;
-
   }
 
 });
