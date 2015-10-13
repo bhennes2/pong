@@ -10,6 +10,7 @@ MainMenu = React.createClass({
 
   onSelect(item) {
     if (item.action === 'challenge') {
+      Meteor.call("removeChallenge", item.challengeId);
       Meteor.call("newGame", item.challengerId, item.challengeeId, (_,gameId) => {
         this.transitionTo('/game/' + gameId);
       });
@@ -26,11 +27,14 @@ MainMenu = React.createClass({
     ];
 
     if (this.data.challenge) {
+      const challenge = this.data.challenge;
+
       menuItems.push({
-        title: "Challenge!!",
-        action: 'challenge',
-        challengerId: this.data.challenge.challengerId,
-        challengeeId: this.data.challenge.challengeeId
+        title:       "Challenge!!",
+        action:      'challenge',
+        challengeId:  challenge._id,
+        challengerId: challenge.challengerId,
+        challengeeId: challenge.challengeeId
       });
     }
 

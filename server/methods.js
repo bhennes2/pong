@@ -1,5 +1,11 @@
 Meteor.methods({
 
+  removeChallenge(challengeId) {
+    check(challengeId, String);
+
+    Challenges.remove(challengeId);
+  },
+
   createChallenge(challengerId, challengeeId) {
     check(challengerId, String);
     check(challengeeId, String);

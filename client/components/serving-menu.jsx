@@ -4,7 +4,7 @@ ServingMenu = React.createClass({
 
   getMeteorData() {
 
-    let game = Games.findOne(this.props.params.id);
+    const game = Games.findOne(this.props.params.id);
 
     return {
       game:    game,
