@@ -2,6 +2,16 @@ Leaders = React.createClass({
 
   mixins: [ReactRouter.Navigation, ReactMeteorData],
 
+  getMeteorData() {
+
+    const handle = Meteor.subscribe("playersWin");
+
+    return {
+      isReady: handle.ready(),
+      players: Players.find({}).fetch()
+    };
+  },
+
   nextLeaders() {
     this.setState({
       currentPage: this.state.currentPage+1,
@@ -24,35 +34,6 @@ Leaders = React.createClass({
     this.menuActions[item.action]();
   },
 
-  winPct(player) {
-    var pct = player.wins / (player.wins + player.losses)
-    return isFinite(pct) ? pct : 1;
-  },
-
-  comparePlayers(a,b) {
-    var result = 0;
-
-    // 1. By winning %
-    result = this.winPct(b) - this.winPct(a);
-
-    // 2. By losses
-    if (result === 0) {
-      result = a.losses - b.losses;
-    }
-
-    // 3. By wins
-    if (result === 0) {
-      result = b.wins - a.wins;
-    }
-
-    // 4. By name
-    if (result === 0) {
-      result = a.name.localeCompare(b.name);
-    }
-
-    return result;
-  },
-
   componentWillMount() {
     this.pageSize = 4;
     this.menuActions = {
@@ -62,39 +43,38 @@ Leaders = React.createClass({
     };
   },
 
-  getMeteorData() {
-    return { players: Players.find({}).fetch() };
-  },
-
   getInitialState() {
     return { currentPage: 0, forceReset: false };
   },
 
   render() {
 
-    var menuItems = [];
+    let menuItems = [];
+    let players   = [];
 
-    if (this.state.currentPage > 0) {
-      menuItems.push({ title: "Previous",  action: "prev" });
+    if (this.data.isReady) {
+
+      if (this.state.currentPage > 0) {
+        menuItems.push({ title: "Previous",  action: "prev" });
+      }
+
+      if (this.data.players.length > (this.state.currentPage+1)*this.pageSize) {
+        menuItems.push({ title: "Next",  action: "next" });
+      }
+
+      menuItems.push({ title: "Main Menu", action: "main" });
+
+      players = this.data.players
+      .splice(this.state.currentPage*this.pageSize, this.pageSize)
+      .map(function(player) {
+        return (
+          <li>
+            <span className="name">{player.name}</span>
+            <span className="record">{player.wins} - {player.losses}</span>
+          </li>
+        );
+      });
     }
-
-    if (this.data.players.length > (this.state.currentPage+1)*this.pageSize) {
-      menuItems.push({ title: "Next",  action: "next" });
-    }
-
-    menuItems.push({ title: "Main Menu", action: "main" });
-
-    var players = this.data.players
-    .sort(this.comparePlayers)
-    .splice(this.state.currentPage*this.pageSize, this.pageSize)
-    .map(function(player) {
-      return (
-        <li>
-          <span className="name">{player.name}</span>
-          <span className="record">{player.wins} - {player.losses}</span>
-        </li>
-      );
-    });
 
     return (
       <div>

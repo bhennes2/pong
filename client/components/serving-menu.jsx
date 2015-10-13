@@ -4,13 +4,16 @@ ServingMenu = React.createClass({
 
   getMeteorData() {
 
-    const game = Games.findOne(this.props.params.id);
+    const gameId = this.props.params.id;
+
+    const handle = Meteor.subscribe("gameData", gameId);
 
     return {
-      game:    game,
+      isReady: handle.ready(),
+      game:    Games.findOne(gameId),
       player1: Players.findOne(game.player1),
       player2: Players.findOne(game.player2)
-    };
+    }
   },
 
   onSelect(item) {
@@ -20,19 +23,25 @@ ServingMenu = React.createClass({
 
   render() {
 
-    var menuItems = [
-      { title: this.data.player1.name, id: this.data.player1._id },
-      { title: this.data.player2.name, id: this.data.player2._id }
-    ];
+    let content = '';
+
+    let menuItems = [];
+
+    if (this.data.isReady) {
+      menuItems = [
+        { title: this.data.player1.name, id: this.data.player1._id },
+        { title: this.data.player2.name, id: this.data.player2._id }
+      ];
+    }
 
     return (
       <div className="game-container">
         <div className="player-container left">
-          <p className="player-name">{this.data.player1.name}</p>
+          <p className="player-name">{this.data.isReady && this.data.player1.name}</p>
           <h1 className="score">0</h1>
         </div>
         <div className="player-container right">
-          <p className="player-name">{this.data.player2.name}</p>
+          <p className="player-name">{this.data.isReady && this.data.player2.name}</p>
           <h1 className="score">0</h1>
         </div>
         <div className="game-message">

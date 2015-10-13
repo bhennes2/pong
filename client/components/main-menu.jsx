@@ -3,7 +3,11 @@ MainMenu = React.createClass({
   mixins: [ReactMeteorData, ReactRouter.Navigation],
 
   getMeteorData() {
+
+    const handle = Meteor.subscribe("challenges");
+
     return {
+      isReady:   handle.ready(),
       challenge: Challenges.findOne()
     };
   },
@@ -26,7 +30,7 @@ MainMenu = React.createClass({
       { title: "Leaders", action: 'leaders', target: "/leaders" }
     ];
 
-    if (this.data.challenge) {
+    if (this.data.isReady && this.data.challenge) {
       const challenge = this.data.challenge;
 
       menuItems.push({
