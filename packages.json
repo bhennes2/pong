@@ -1,5 +1,6 @@
 {
   "react-router": "1.0.0-beta3",
   "externalify": "0.1.0",
-  "node-slack": "0.0.7"
+  "node-slack": "0.0.7",
+  "body-parser": "1.14.1"
 }

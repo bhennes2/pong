@@ -1,17 +1,38 @@
 MainMenu = React.createClass({
 
-  mixins: [ReactRouter.Navigation],
+  mixins: [ReactMeteorData, ReactRouter.Navigation],
+
+  getMeteorData() {
+    return {
+      challenge: Challenges.findOne()
+    };
+  },
 
   onSelect(item) {
-    this.transitionTo(item.target);
+    if (item.action === 'challenge') {
+      Meteor.call("newGame", item.challengerId, item.challengeeId, (_,gameId) => {
+        this.transitionTo('/game/' + gameId);
+      });
+    } else {
+      this.transitionTo(item.target);
+    }
   },
 
   render() {
 
     var menuItems = [
-      { title: "Play", target: "/game/new" },
-      { title: "Leaders", target: "/leaders" }
+      { title: "Play",    action: 'play',    target: "/game/new" },
+      { title: "Leaders", action: 'leaders', target: "/leaders" }
     ];
+
+    if (this.data.challenge) {
+      menuItems.push({
+        title: "Challenge!!",
+        action: 'challenge',
+        challengerId: this.data.challenge.challengerId,
+        challengeeId: this.data.challenge.challengeeId
+      });
+    }
 
     return (
       <div>

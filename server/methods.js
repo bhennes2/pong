@@ -1,5 +1,16 @@
 Meteor.methods({
 
+  createChallenge(challengerId, challengeeId) {
+    check(challengerId, String);
+    check(challengeeId, String);
+
+    Challenges.insert({
+      challengerId: challengerId,
+      challengeeId: challengeeId,
+      created_at: new Date()
+    });
+  },
+
   slackTaunt(game, winnerId, loserId) {
     check(game, Object);
     check(winnerId, String);

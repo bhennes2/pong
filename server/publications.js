@@ -5,3 +5,7 @@ Meteor.publish("players", function() {
 Meteor.publish("games", function() {
   return Games.find({});
 });
+
+Meteor.publish("challenges", function() {
+  return Challenges.find({});
+});
