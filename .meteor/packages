@@ -30,3 +30,5 @@ cosmos:browserify
 
 npm-container
 skeleton:skeleton
+meteorhacks:picker
+momentjs:moment

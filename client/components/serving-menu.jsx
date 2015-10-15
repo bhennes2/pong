@@ -4,12 +4,13 @@ ServingMenu = React.createClass({
 
   getMeteorData() {
 
-    let game = Games.findOne(this.props.params.id);
+    const gameId = this.props.params.id,
+          handle = Meteor.subscribe("gameData", gameId);
 
     return {
-      game:    game,
-      player1: Players.findOne(game.player1),
-      player2: Players.findOne(game.player2)
+      isReady: handle.ready(),
+      game:    Games.findOne(gameId),
+      players: Players.find({}).fetch()
     };
   },
 
@@ -18,21 +19,37 @@ ServingMenu = React.createClass({
     this.transitionTo('/game/' + this.props.params.id + '/play');
   },
 
+  player1() {
+    return this.data.players.find((player)=>{ return player._id === this.data.game.player1; });
+  },
+
+  player2() {
+    return this.data.players.find((player)=>{ return player._id === this.data.game.player2; });
+  },
+
   render() {
 
-    var menuItems = [
-      { title: this.data.player1.name, id: this.data.player1._id },
-      { title: this.data.player2.name, id: this.data.player2._id }
-    ];
+    let menuItems = [],
+        player1   = {},
+        player2   = {};
+
+    if (this.data.isReady) {
+      menuItems = this.data.players.map((player)=>{
+        return { title: player.name, id: player._id };
+      });
+
+      player1 = this.player1();
+      player2 = this.player2();
+    }
 
     return (
       <div className="game-container">
         <div className="player-container left">
-          <p className="player-name">{this.data.player1.name}</p>
+          <p className="player-name">{player1.name}</p>
           <h1 className="score">0</h1>
         </div>
         <div className="player-container right">
-          <p className="player-name">{this.data.player2.name}</p>
+          <p className="player-name">{player2.name}</p>
           <h1 className="score">0</h1>
         </div>
         <div className="game-message">

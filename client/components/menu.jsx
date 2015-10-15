@@ -7,7 +7,7 @@ Menu = React.createClass({
     listens:    React.PropTypes.array.isRequired,
     onSelect:   React.PropTypes.func,
     onUnSelect: React.PropTypes.func,
-    forceReset: React.PropTypes.boolean
+    forceReset: React.PropTypes.bool
   },
 
   hold(keyCode) {
@@ -88,8 +88,8 @@ Menu.Item = React.createClass({
 
   propTypes: {
     title:       React.PropTypes.string,
-    highlighted: React.PropTypes.boolean,
-    selected:    React.PropTypes.boolean
+    highlighted: React.PropTypes.bool,
+    selected:    React.PropTypes.bool
   },
 
   render() {

@@ -3,25 +3,23 @@ PlayerDetail = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    let id = this.props.params.id;
+
+    const playerId = this.props.params.id,
+          handle1 = Meteor.subscribe("playersWin"),
+          handle2 = Meteor.subscribe("gamesForPlayer", playerId);
+
     return {
+      isReady: handle1.ready() && handle2.ready(),
       players: Players.find({}).fetch(),
-      player: Players.findOne(id),
-      games: Games.find({$or: [{player1: id}, {player2: id}]}, { sort: {createdAt: -1 }}).fetch()
+      player: Players.findOne(playerId),
+      games: Games.find({}).fetch()
     };
   },
 
   getOrdinal(player) {
-    var players = this.data.players,
-        n = 1;
-
-    for (var i=0; i < players.length; i++){
-      if (players[i]._id === player._id){
-        n += i;
-      }
-    }
-    var s = ["th","st","nd","rd"],
-        v = n%100;
+    const n = this.data.players.findIndex( (player) => { return player._id === this.data.player._id; } ) + 1,
+          s = ["th","st","nd","rd"],
+          v = n%100;
     return n+(s[(v-20)%10]||s[v]||s[0]);
   },
 
@@ -37,9 +35,10 @@ PlayerDetail = React.createClass({
 
     let stuff = '';
 
-    let player = this.data.player;
+    if (this.data.isReady) {
 
-    if (player) {
+      const player = this.data.player;
+
       stuff = (
         <div>
           <div className="row">
@@ -79,12 +78,14 @@ PlayerDetail = React.createClass({
 
 PlayerGames = React.createClass({
 
-  formatDate(dateStr){
-    var date = new Date(dateStr),
-        monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  propTypes: {
+    players: React.PropTypes.array.isRequired,
+    player: React.PropTypes.object.isRequired,
+    games: React.PropTypes.array.isRequired
+  },
 
-    return [dayNames[date.getDay()], ",", monthNames[date.getMonth()], " ", date.getDate()].join('');
+  formatDate(dateStr){
+    return moment(dateStr).format('ddd, MMM Do');
   },
 
   opponent(game){
@@ -95,39 +96,19 @@ PlayerGames = React.createClass({
     })[0];
   },
 
-  outcome(game){
-    var player = this.props.player;
-
-    if (game.player1 === player._id){
-      var opponentScoreKey = "player2Score",
-          playerScoreKey = "player1Score";
-    } else {
-      var opponentScoreKey = "player1Score",
-          playerScoreKey = "player2Score";
-    }
-
-    return (game[playerScoreKey] > game[opponentScoreKey]) ? "W" : "L";
-  },
-
-  gameComplete(game){
-    var scoreDelta = Math.abs(game.player1Score - game.player2Score);
-    return (scoreDelta >= 2 && (game.player1Score >= 21 || game.player2Score >= 21)) ? "Final" : "Live";
-  },
-
   render(){
 
     var games = this.props.games.map((game) => {
       return (
-        <tr>
+        <tr key={game._id}>
           <td>{this.formatDate(game.createdAt)}</td>
           <td>vs</td>
           <td>{this.opponent(game).name}</td>
-          <td>{this.outcome(game)}</td>
+          <td>{game.winner ? game.winner === this.props.player._id ? 'W' : 'L' : '-'}</td>
           <td>{game.player1Score} - {game.player2Score}</td>
-          <td>{this.gameComplete(game)}</td>
+          <td>{game.inProgress ? 'Live' : 'Final'}</td>
         </tr>
       );
-
     });
 
     return <tbody>{games}</tbody>;

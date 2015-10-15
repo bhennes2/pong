@@ -3,7 +3,11 @@ PlayerForm = React.createClass({
   mixins: [ReactMeteorData, ReactRouter.Navigation],
 
   getMeteorData() {
+    const playerId = this.props.params.id,
+          handle = Meteor.subscribe("onePlayer", playerId);
+
     return {
+      isReady: handle.ready(),
       player: Players.findOne(this.props.params.id)
     };
   },
@@ -11,20 +15,20 @@ PlayerForm = React.createClass({
   submitForm(event){
     event.preventDefault();
 
-    Players.update(this.props.params.id, { $set: {
+    Meteor.call("updatePlayer", this.props.params.id, {
       name: this.refs.name.getDOMNode().value,
       email: this.refs.email.getDOMNode().value,
       taunt: this.refs.taunt.getDOMNode().value
-    } });
-
-    this.transitionTo('/players/' + this.props.params.id, {alertMessage: "Player successfully updated!", showAlert: true });
+    }, ()=>{
+      this.transitionTo(`/players/${this.props.params.id}`, {alertMessage: "Player successfully updated!", showAlert: true });
+    });
   },
 
   render() {
 
     let stuff = '';
 
-    if (this.data.player) {
+    if (this.data.isReady) {
       stuff = (
         <div>
           <h4>Edit Player</h4><br/>

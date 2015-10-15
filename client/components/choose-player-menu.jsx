@@ -2,12 +2,22 @@ ChoosePlayerMenu = React.createClass({
 
   mixins: [ReactMeteorData, ReactRouter.Navigation],
 
+  getMeteorData() {
+
+    const handle = Meteor.subscribe("playersAlpha");
+
+    return {
+      isReady: handle.ready(),
+      players: Players.find({}).fetch()
+    };
+  },
+
   selectPlayer(player, id) {
     this[player + "Id"] = id;
 
     if (this.player1Id && this.player2Id) {
       Meteor.call("newGame", this.player1Id, this.player2Id, (_,gameId) => {
-        this.transitionTo('/game/' + gameId);
+        this.transitionTo(`/game/${gameId}`);
       });
     }
   },
@@ -28,18 +38,15 @@ ChoosePlayerMenu = React.createClass({
     this.player2Id = null;
   },
 
-  getMeteorData() {
-
-    return {
-      players: Players.find({}).fetch()
-    };
-  },
-
   render() {
 
-    let menuItems = this.data.players.map((player) => {
-      return { title: player.name, id: player._id };
-    });
+    let menuItems = []
+
+    if (this.data.isReady) {
+      menuItems = this.data.players.map((player) => {
+        return { title: player.name, id: player._id };
+      });
+    }
 
     return (
       <div className="game-container">

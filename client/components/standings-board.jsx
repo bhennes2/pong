@@ -3,8 +3,12 @@ StandingsBoard = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
+
+    const handle = Meteor.subscribe("playersWin");
+
     return {
-      players: Players.find({}, {sort: {wins: -1}}).fetch()
+      isReady: handle.ready(),
+      players: Players.find({}).fetch()
     };
   },
 
@@ -34,18 +38,8 @@ StandingsBoard = React.createClass({
 
 StandingsBoard.Items = React.createClass({
 
-  totalGamesPlayed(player) {
-    var items = [player.wins, player.losses];
-    return items.reduce((a, b) => a + b);
-  },
-
-  winningPct(player) {
-    var total = this.totalGamesPlayed(player),
-        pct = "";
-    if (total > 0){
-      pct = (player.wins / total).toFixed(3);
-    }
-    return pct;
+  propTypes: {
+    players: React.PropTypes.array.isRequired
   },
 
   render() {
@@ -53,12 +47,12 @@ StandingsBoard.Items = React.createClass({
     var players = this.props.players.map(function(player, idx) {
 
       return (
-        <tr>
+        <tr key={player._id}>
           <td>{player.name}</td>
           <td>{player.wins}</td>
           <td>{player.losses}</td>
-          <td>{this.totalGamesPlayed(player)}</td>
-          <td>{this.winningPct(player)}</td>
+          <td>{player.wins + player.losses}</td>
+          <td>{player.winPct}</td>
           <td></td>
           <td></td>
           <td>
