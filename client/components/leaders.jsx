@@ -68,7 +68,7 @@ Leaders = React.createClass({
       .splice(this.state.currentPage*this.pageSize, this.pageSize)
       .map(function(player) {
         return (
-          <li>
+          <li key={player._id}>
             <span className="name">{player.name}</span>
             <span className="record">{player.wins} - {player.losses}</span>
           </li>

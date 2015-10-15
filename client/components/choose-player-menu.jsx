@@ -17,7 +17,7 @@ ChoosePlayerMenu = React.createClass({
 
     if (this.player1Id && this.player2Id) {
       Meteor.call("newGame", this.player1Id, this.player2Id, (_,gameId) => {
-        this.transitionTo('/game/' + gameId);
+        this.transitionTo(`/game/${gameId}`);
       });
     }
   },
