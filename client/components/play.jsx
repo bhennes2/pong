@@ -10,12 +10,17 @@ Play = React.createClass({
           game    = Games.findOne(gameId),
           players = Players.find({}).fetch();
 
-    return {
-      isReady: handle.ready(),
-      game:    game,
-      player1: players.find((player)=>{ return player._id === game.player1; }),
-      player2: players.find((player)=>{ return player._id === game.player2; })
+    let data = {
+      isReady: handle.ready()
     };
+
+    if (handle.ready()) {
+      data.game:    game,
+      data.player1: players.find((player)=>{ return player._id === game.player1; }),
+      data.player2: players.find((player)=>{ return player._id === game.player2; })
+    }
+
+    return data;
   },
 
   hold(keyCode) {},
