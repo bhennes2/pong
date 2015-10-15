@@ -1,7 +1,17 @@
 # Pong
 
-An app for the LaunchPad Lab Demo Day. [Check out the live demo](http://lpl-pong.meteor.com).
+An app to track games and scoring for the LaunchPad Lab Pong Table. [Check out the live app](http://www.rocketpaddle.com).
 
 ![A little inspiration](http://f.cl.ly/items/0J3X2k0i0u3b0F2T3W33/inspiration.jpg "A little inspiration")
 
-Launching 5/21/2015
+Launched 5/21/2015
+
+## Deployment
+
+**Staging**
+
+`meteor deploy staging.rocketpaddle.com`
+
+**Production**
+
+`meteor deploy www.rocketpaddle.com`
