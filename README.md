@@ -6,12 +6,17 @@ An app to track games and scoring for the LaunchPad Lab Pong Table. [Check out t
 
 Launched 5/21/2015
 
+## Running locally
+
+`npm start`
+
 ## Deployment
 
 **Staging**
 
-`meteor deploy staging.rocketpaddle.com`
+`npm run-script deploy:staging`
 
 **Production**
 
-`meteor deploy www.rocketpaddle.com`
+`npm run-script deploy:production`
+

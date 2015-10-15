@@ -4,7 +4,7 @@
   "description": "Ping Pong LaunchPad Lab style",
   "scripts": {
     "start": "meteor --settings settings/development.json",
-    "staging": "meteor deploy staging.meteor.com --settings settings/development.json",
-    "production": "meteor deploy production.meteor.com --settings settings/production.json"
+    "deploy:staging": "meteor deploy staging.rocketpaddle.com --settings settings/staging.json",
+    "deploy:production": "meteor deploy www.rocketpaddle.com --settings settings/production.json"
   }
 }
