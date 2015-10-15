@@ -52,7 +52,7 @@ StandingsBoard.Items = React.createClass({
           <td>{player.wins}</td>
           <td>{player.losses}</td>
           <td>{player.wins + player.losses}</td>
-          <td>{player.winPct}</td>
+          <td>{player.winPct === -1 ? 0 : player.winPct}</td>
           <td></td>
           <td></td>
           <td>
