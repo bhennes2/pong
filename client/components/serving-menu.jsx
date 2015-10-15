@@ -15,8 +15,8 @@ ServingMenu = React.createClass({
   },
 
   onSelect(item) {
-    Meteor.call("setFirstServer", this.props.params.id, item.id);
-    this.transitionTo('/game/' + this.props.params.id + '/play');
+    Meteor.call("setFirstServer", this.data.game, item.player);
+    this.transitionTo('/game/' + this.data.game._id + '/play');
   },
 
   player1() {
@@ -35,7 +35,7 @@ ServingMenu = React.createClass({
 
     if (this.data.isReady) {
       menuItems = this.data.players.map((player)=>{
-        return { title: player.name, id: player._id };
+        return { title: player.name, player: player };
       });
 
       player1 = this.player1();
