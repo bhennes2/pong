@@ -12,30 +12,30 @@ ChoosePlayerMenu = React.createClass({
     };
   },
 
-  selectPlayer(player, id) {
-    this[player + "Id"] = id;
+  selectPlayer(player1OrPlayer2, player) {
+    this[player1OrPlayer2] = player;
 
-    if (this.player1Id && this.player2Id) {
-      Meteor.call("newGame", this.player1Id, this.player2Id, (_,gameId) => {
+    if (this.player1 && this.player2) {
+      Meteor.call("newGame", this.player1, this.player2, (_,gameId) => {
         this.transitionTo(`/game/${gameId}`);
       });
     }
   },
 
   selectPlayer1(item) {
-    this.selectPlayer("player1", item.id);
+    this.selectPlayer("player1", item.player);
   },
 
   selectPlayer2(item) {
-    this.selectPlayer("player2", item.id);
+    this.selectPlayer("player2", item.player);
   },
 
   unSelectPlayer1(item) {
-    this.player1Id = null;
+    this.player1 = null;
   },
 
   unSelectPlayer2(item) {
-    this.player2Id = null;
+    this.player2 = null;
   },
 
   render() {
@@ -44,7 +44,7 @@ ChoosePlayerMenu = React.createClass({
 
     if (this.data.isReady) {
       menuItems = this.data.players.map((player) => {
-        return { title: player.name, id: player._id };
+        return { title: player.name, player: player };
       });
     }
 
