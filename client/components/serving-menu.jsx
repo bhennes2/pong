@@ -4,14 +4,21 @@ ServingMenu = React.createClass({
 
   getMeteorData() {
 
-    const gameId = this.props.params.id,
-          handle = Meteor.subscribe("gameData", gameId);
+    const gameId  = this.props.params.id,
+          handle  = Meteor.subscribe("gameData", gameId);
 
-    return {
-      isReady: handle.ready(),
-      game:    Games.findOne(gameId),
-      players: Players.find({}).fetch()
+    let data = {
+      isReady: handle.ready()
     };
+
+    if (handle.ready()) {
+      const game = Games.findOne(gameId);
+
+      data.game    = game;
+      data.players = Players.find({_id: { $in: [game.player1, game.player2] } }).fetch();
+    }
+
+    return data;
   },
 
   onSelect(item) {
