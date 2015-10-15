@@ -15,9 +15,9 @@ Play = React.createClass({
     };
 
     if (handle.ready()) {
-      data.game:    game,
-      data.player1: players.find((player)=>{ return player._id === game.player1; }),
-      data.player2: players.find((player)=>{ return player._id === game.player2; })
+      data.game    =  game;
+      data.player1 = players.find((player)=>{ return player._id === game.player1; });
+      data.player2 = players.find((player)=>{ return player._id === game.player2; });
     }
 
     return data;
