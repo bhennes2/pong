@@ -17,16 +17,25 @@ if (Meteor.isServer) {
       players.forEach(function (player, i) {
         dbPlayers[i] = Players.insert(player);
       });
+      Games.insert({
+        player1: dbPlayers[0],
+        player2: dbPlayers[1],
+        player1Score: 21,
+        player2Score: 18,
+        firstServer: dbPlayers[1],
+        inProgress: false,
+        createdAt: new Date(2015, 9, 12, 11)
+      });
 
-      // Games.insert({
-      //   player1: dbPlayers[0],
-      //   player2: dbPlayers[1],
-      //   player1Score: 15,
-      //   player2Score: 21,
-      //   firstServer: dbPlayers[1],
-      //   inProgress: false,
-      //   createdAt: new Date()
-      // });
+      Games.insert({
+        player1: dbPlayers[0],
+        player2: dbPlayers[1],
+        player1Score: 21,
+        player2Score: 15,
+        firstServer: dbPlayers[1],
+        inProgress: false,
+        createdAt: new Date(2015, 9, 11, 30)
+      });
     }
   });
 }
