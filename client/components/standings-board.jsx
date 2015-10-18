@@ -44,6 +44,14 @@ StandingsBoard.Items = React.createClass({
 
   render() {
 
+    var formatPct = function(pct){
+      var value = 0;
+      if (pct && pct > -1){
+        value = pct;
+      }
+      return value.toFixed(3);
+    };
+
     var players = this.props.players.map(function(player, idx) {
 
       return (
@@ -52,7 +60,7 @@ StandingsBoard.Items = React.createClass({
           <td>{player.wins}</td>
           <td>{player.losses}</td>
           <td>{player.wins + player.losses}</td>
-          <td>{player.winPct === -1 ? 0 : player.winPct}</td>
+          <td>{formatPct(player.winPct)}</td>
           <td></td>
           <td></td>
           <td>
