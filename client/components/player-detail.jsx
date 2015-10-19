@@ -51,6 +51,7 @@ PlayerDetail = React.createClass({
               <p><Link to={`/players/${player._id}/edit`}>Edit</Link></p>
             </div>
           </div>
+          <PlayerSplits />
           <table className="u-full-width">
             <thead>
               <tr>

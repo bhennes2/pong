@@ -253,8 +253,12 @@ td > a {
   text-decoration: none;
 }
 
-input, textarea {
+input, textarea, select {
   color: black;
+}
+
+select[disabled] {
+  color: graytext;
 }
 
 .alert {
