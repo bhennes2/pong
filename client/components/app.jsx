@@ -1,11 +1,21 @@
 App = React.createClass({
 
-  render() {
+  mixins: [ReactMeteorData],
 
-    return (
-      <div className="in-game">
-        {this.props.children}
-      </div>
-    );
+  getMeteorData() {
+
+    const handles = [
+      Meteor.subscribe("players"),
+      Meteor.subscribe("games"),
+      Meteor.subscribe("challenges")
+    ];
+
+    return {
+      isReady: handles.every(handle=>{return handle.ready();})
+    };
+  },
+
+  render() {
+    return <div className="in-game">{this.data.isReady ? this.props.children : []}</div>;
   }
 });

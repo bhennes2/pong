@@ -3,12 +3,8 @@ StandingsBoard = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-
-    const handle = Meteor.subscribe("playersWin");
-
     return {
-      isReady: handle.ready(),
-      players: Players.find({}).fetch()
+      players: Players.find({}, { sort: { winPct: -1, losses: 1, wins: -1, name: 1 } }).fetch()
     };
   },
 
@@ -52,8 +48,7 @@ StandingsBoard.Items = React.createClass({
       return value.toFixed(3);
     };
 
-    var players = this.props.players.map(function(player, idx) {
-
+    const players = this.props.players.map((player, idx)=>{
       return (
         <tr key={player._id}>
           <td>{player.name}</td>
@@ -68,8 +63,7 @@ StandingsBoard.Items = React.createClass({
           </td>
         </tr>
       );
-
-    }, this);
+    });
 
     return <tbody>{players}</tbody>;
   }

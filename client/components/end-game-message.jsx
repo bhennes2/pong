@@ -3,15 +3,22 @@ EndGameMessage = React.createClass({
   mixins: [ReactRouter.Navigation],
 
   propTypes: {
-    winner: React.PropTypes.string.isRequired
+    game:    React.PropTypes.object.isRequired,
+    winner:  React.PropTypes.string.isRequired,
+    player1: React.PropTypes.object.isRequired,
+    player2: React.PropTypes.object.isRequired
   },
 
   onSelect(item) {
     if (item.action === "main") {
       this.transitionTo("/main");
     } else {
-      Meteor.call("newGame", this.props.game.player1, this.props.game.player2, (_,gameId) => {
-        this.transitionTo('/game/' + gameId);
+
+      const game = this.props.game,
+            newFirstServer = game.firstServer === game.player1 ? game.player2 : game.player1;
+
+      Meteor.call("playAgain", this.props.player1, this.props.player2, newFirstServer, (_,gameId) => {
+        this.transitionTo(`/game/${gameId}/play`);
       });
     }
   },

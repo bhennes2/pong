@@ -1,14 +1,10 @@
 MainMenu = React.createClass({
 
-  mixins: [ReactMeteorData, ReactRouter.Navigation],
+  mixins: [ReactRouter.Navigation, ReactMeteorData],
 
   getMeteorData() {
-
-    const handle = Meteor.subscribe("challenges");
-
     return {
-      isReady:   handle.ready(),
-      challenge: Challenges.findOne()
+      challenge: Challenges.findOne({}, { sort: { created_at: 1 } })
     };
   },
 
@@ -31,12 +27,12 @@ MainMenu = React.createClass({
       { title: "Leaders", action: 'leaders', target: "/leaders" }
     ];
 
-    if (this.data.isReady && this.data.challenge) {
-
+    const challenge = this.data.challenge;
+    if (challenge) {
       menuItems.push({
         title:     "Challenge!!",
         action:    'challenge',
-        challenge: this.data.challenge
+        challenge: challenge
       });
     }
 

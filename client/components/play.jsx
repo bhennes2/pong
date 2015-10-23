@@ -3,42 +3,25 @@ Play = React.createClass({
   mixins: [KeyHandler, ReactMeteorData],
 
   getMeteorData() {
+    const game = Games.findOne(this.props.params.id);
 
-    const gameId = this.props.params.id;
-
-    const handle  = Meteor.subscribe("gameData", gameId),
-          game    = Games.findOne(gameId),
-          players = Players.find({}).fetch();
-
-    let data = {
-      isReady: handle.ready()
+    return {
+      game:    game,
+      player1: Players.findOne(game.player1),
+      player2: Players.findOne(game.player2)
     };
-
-    if (handle.ready()) {
-      data.game    =  game;
-      data.player1 = players.find((player)=>{ return player._id === game.player1; });
-      data.player2 = players.find((player)=>{ return player._id === game.player2; });
-    }
-
-    return data;
   },
 
   hold(keyCode) {},
 
   tap(keyCode) {
 
-    let player1Score = this.data.game.player1Score;
-    let player2Score = this.data.game.player2Score;
-
     if (!this.data.game.inProgress) {
       return;
     }
 
-    if (keyCode === 65) {
-      player1Score++;
-    } else {
-      player2Score++;
-    }
+    const player1Score = this.data.game.player1Score + (keyCode === 65 ? 1 : 0),
+          player2Score = this.data.game.player2Score + (keyCode === 65 ? 0 : 1);
 
     Meteor.call("updateGame", this.data.game, player1Score, player2Score, this.data.player1, this.data.player2);
   },
@@ -62,28 +45,29 @@ Play = React.createClass({
 
   render() {
 
-    if (this.data.isReady) {
+    const game           = this.data.game,
+          endGameMessage = (
+            <EndGameMessage
+              game={game}
+              winner={this.winner()}
+              player1={this.data.player1}
+              player2={this.data.player2} />
+          );
 
-      const game       = this.data.game,
-            endMessage = game.inProgress ? '' : <EndGameMessage game={game} winner={this.winner()}/>;
-
-      return (
-        <div className="game-container">
-          <div className="player-container left">
-            <p className="player-name">{this.data.player1.name}</p>
-            <h1 className="score">{game.player1Score}</h1>
-            <ServingMessage show={this.currentServer() === this.data.player1._id} />
-          </div>
-          <div className="player-container right">
-            <p className="player-name">{this.data.player2.name}</p>
-            <h1 className="score">{game.player2Score}</h1>
-            <ServingMessage show={this.currentServer() === this.data.player2._id} />
-          </div>
-          {endMessage}
+    return (
+      <div className="game-container">
+        <div className="player-container left">
+          <p className="player-name">{this.data.player1.name}</p>
+          <h1 className="score">{game.player1Score}</h1>
+          <ServingMessage show={this.currentServer() === this.data.player1._id} />
         </div>
-      );
-    } else {
-      return <div></div>;
-    }
+        <div className="player-container right">
+          <p className="player-name">{this.data.player2.name}</p>
+          <h1 className="score">{game.player2Score}</h1>
+          <ServingMessage show={this.currentServer() === this.data.player2._id} />
+        </div>
+        {game.inProgress ? '' : endGameMessage}
+      </div>
+    );
   }
 });

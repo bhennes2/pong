@@ -4,15 +4,12 @@ PlayerDetail = React.createClass({
 
   getMeteorData() {
 
-    const playerId = this.props.params.id,
-          handle1 = Meteor.subscribe("playersWin"),
-          handle2 = Meteor.subscribe("gamesForPlayer", playerId);
+    const playerId = this.props.params.id;
 
     return {
-      isReady: handle1.ready() && handle2.ready(),
       players: Players.find({}).fetch(),
-      player: Players.findOne(playerId),
-      games: Games.find({}).fetch()
+      player:  Players.findOne(playerId),
+      games:   Games.find({$or: [{player1: playerId}, {player2: playerId}]}, { sort: {createdAt: -1 }}).fetch()
     };
   },
 
@@ -33,46 +30,39 @@ PlayerDetail = React.createClass({
 
   render() {
 
-    let stuff = '';
+    const player = this.data.player;
 
-    if (this.data.isReady) {
-
-      const player = this.data.player;
-
-      stuff = (
-        <div>
-          <div className="row">
-            {this.alert()}
-            <div className="eleven columns">
-              <h4>{player.name}</h4>
-              <p>{player.wins}-{player.losses}, {this.getOrdinal(player)} in LaunchPad Lab</p>
-            </div>
-            <div className="one column">
-              <p><Link to={`/players/${player._id}/edit`}>Edit</Link></p>
-            </div>
+    return (
+      <div>
+        <div className="row">
+          {this.alert()}
+          <div className="eleven columns">
+            <h4>{player.name}</h4>
+            <p>{player.wins}-{player.losses}, {this.getOrdinal(player)} in LaunchPad Lab</p>
           </div>
-          <table className="u-full-width">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th></th>
-                <th>Opponent</th>
-                <th></th>
-                <th>Score</th>
-                <th></th>
-              </tr>
-            </thead>
-            <PlayerGames
-              players={this.data.players}
-              player={player}
-              games={this.data.games}
-            />
-          </table>
+          <div className="one column">
+            <p><Link to={`/players/${player._id}/edit`}>Edit</Link></p>
+          </div>
         </div>
-      );
-    }
-
-    return <div>{stuff}</div>;
+        <table className="u-full-width">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th></th>
+              <th>Opponent</th>
+              <th></th>
+              <th>Score</th>
+              <th></th>
+            </tr>
+          </thead>
+          <PlayerGames
+            players={this.data.players}
+            player={player}
+            games={this.data.games}
+          />
+        </table>
+      </div>
+    );
   }
 });
 

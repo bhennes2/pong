@@ -1,5 +1,19 @@
 Admin = React.createClass({
 
+  mixins: [ReactMeteorData],
+
+  getMeteorData() {
+
+    const handles = [
+      Meteor.subscribe("players"),
+      Meteor.subscribe("games")
+    ];
+
+    return {
+      isReady: handles.every(handle=>{return handle.ready();})
+    };
+  },
+
   render() {
 
     return (
@@ -13,7 +27,7 @@ Admin = React.createClass({
             </ul>
           </div>
         </nav>
-        {this.props.children}
+        {this.data.isReady ? this.props.children : []}
       </div>
     );
   }
