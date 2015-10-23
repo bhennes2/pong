@@ -1,6 +1,12 @@
 MainMenu = React.createClass({
 
-  mixins: [ReactRouter.Navigation],
+  mixins: [ReactRouter.Navigation, ReactMeteorData],
+
+  getMeteorData() {
+    return {
+      challenge: Challenges.findOne({}, { sort: { created_at: 1 } })
+    };
+  },
 
   onSelect(item) {
     if (item.action === 'challenge') {
@@ -21,9 +27,8 @@ MainMenu = React.createClass({
       { title: "Leaders", action: 'leaders', target: "/leaders" }
     ];
 
-    const challenge = this.props.store.challenges && this.props.store.challenges[0];
+    const challenge = this.data.challenge;
     if (challenge) {
-
       menuItems.push({
         title:     "Challenge!!",
         action:    'challenge',

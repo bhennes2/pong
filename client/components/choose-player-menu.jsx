@@ -3,12 +3,8 @@ ChoosePlayerMenu = React.createClass({
   mixins: [ReactMeteorData, ReactRouter.Navigation],
 
   getMeteorData() {
-
-    const handle = Meteor.subscribe("playersAlpha");
-
     return {
-      isReady: handle.ready(),
-      players: Players.find({}).fetch()
+      players: Players.find({}, { sort: { name: 1 } }).fetch()
     };
   },
 
@@ -42,11 +38,9 @@ ChoosePlayerMenu = React.createClass({
 
     let menuItems = []
 
-    if (this.data.isReady) {
-      menuItems = this.data.players.map((player) => {
-        return { title: player.name, player: player };
-      });
-    }
+    menuItems = this.data.players.map((player) => {
+      return { title: player.name, player: player };
+    });
 
     return (
       <div className="game-container">

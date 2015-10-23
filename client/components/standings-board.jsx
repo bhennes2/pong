@@ -3,12 +3,8 @@ StandingsBoard = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-
-    const handle = Meteor.subscribe("playersWin");
-
     return {
-      isReady: handle.ready(),
-      players: Players.find({}).fetch()
+      players: Players.find({}, { sort: { winPct: -1, losses: 1, wins: -1, name: 1 } }).fetch()
     };
   },
 

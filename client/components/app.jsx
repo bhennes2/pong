@@ -11,21 +11,11 @@ App = React.createClass({
     ];
 
     return {
-      isReady: handles.every(handle=>{return handle.ready();}),
-      store : {
-        players:    Players.find().fetch(),
-        games:      Games.find().fetch(),
-        challenges: Challenges.find().fetch()
-      }
+      isReady: handles.every(handle=>{return handle.ready();})
     };
   },
 
   render() {
-
-    const children = this.data.isReady ? React.Children.map(this.props.children, child=>{
-      return React.addons.cloneWithProps(child, {store: this.data.store });
-    }) : [];
-
-    return <div className="in-game">{children}</div>;
+    return <div className="in-game">{this.data.isReady ? this.props.children : []}</div>;
   }
 });
