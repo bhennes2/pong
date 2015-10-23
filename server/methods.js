@@ -11,10 +11,12 @@ Meteor.methods({
     });
   },
 
-  slackTaunt(game, winner, loser) {
-    check(game, Object);
+  slackTaunt(gameId, winner, loser) {
+    check(gameId, String);
     check(winner, Object);
     check(loser, Object);
+
+    const game = Games.findOne(gameId);
 
     const slackSettings = Meteor.settings.private.slack,
           SlackAPI = Meteor.npmRequire( 'node-slack' ),

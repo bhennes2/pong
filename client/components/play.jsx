@@ -16,18 +16,12 @@ Play = React.createClass({
 
   tap(keyCode) {
 
-    let player1Score = this.data.game.player1Score;
-    let player2Score = this.data.game.player2Score;
-
     if (!this.data.game.inProgress) {
       return;
     }
 
-    if (keyCode === 65) {
-      player1Score++;
-    } else {
-      player2Score++;
-    }
+    const player1Score = this.data.game.player1Score + (keyCode === 65 ? 1 : 0),
+          player2Score = this.data.game.player2Score + (keyCode === 65 ? 0 : 1);
 
     Meteor.call("updateGame", this.data.game, player1Score, player2Score, this.data.player1, this.data.player2);
   },
