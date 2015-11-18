@@ -111,7 +111,7 @@ p.menu-item.selected:after {
 
 .player-container {
   width: 49%;
-  height: 2000px;
+  height: 100vh;
 }
 
 .player-container.left p.player-name {
