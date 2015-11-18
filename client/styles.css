@@ -8,7 +8,8 @@ body {
 }
 
 #pong-app {
-  margin-top: 20px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .in-game h1, h2, p {
@@ -114,16 +115,20 @@ p.menu-item.selected:after {
 }
 
 .player-container.left p.player-name {
-  text-align: left;
+  text-align: center;
+  font-size: 5vh;
+  margin-top: 20px;
 }
 
 .player-container.right p.player-name {
-  text-align: right;
+  text-align: center;
+  font-size: 5vh;
+  margin-top: 20px;
 }
 
 .serving-message {
   position: absolute;
-  bottom: 0;
+  bottom: 2vh;
   color: red;
   text-align: center;
   display: block;
@@ -133,17 +138,19 @@ p.menu-item.selected:after {
 }
 
 .player-container.left .serving-message {
-  left: 20%;
+  left: 13vw;
+  font-size: 5vh;
 }
 
 .player-container.right .serving-message {
-  right: 20%;
+  right: 13vw;
+  font-size: 5vh;
 }
 
 
 .player-container .score {
-  font-size: 250px;
-  margin-top: 300px;
+  font-size: 45vh;
+  margin-top: 20vh;
 }
 
 .left {
@@ -157,12 +164,13 @@ p.menu-item.selected:after {
 
 .game-message {
   position: absolute;
-  left: 23%;
-  top: 36%;
+  left: 50%;
+  top: 20vh;
   padding: 0px;
   border: 5px solid white;
   border-radius: 5px;
   width: 500px;
+  margin-left: -275px;
   background: black;
 }
 
