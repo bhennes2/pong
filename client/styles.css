@@ -111,7 +111,7 @@ p.menu-item.selected:after {
 
 .player-container {
   width: 49%;
-  height: 800px;
+  height: 2000px;
 }
 
 .player-container.left p.player-name {
@@ -127,8 +127,8 @@ p.menu-item.selected:after {
 }
 
 .serving-message {
-  position: absolute;
-  bottom: 2vh;
+  width: 20vw;
+  margin: 2vh auto 0;
   color: red;
   text-align: center;
   display: block;
@@ -138,12 +138,10 @@ p.menu-item.selected:after {
 }
 
 .player-container.left .serving-message {
-  left: 13vw;
   font-size: 5vh;
 }
 
 .player-container.right .serving-message {
-  right: 13vw;
   font-size: 5vh;
 }
 
