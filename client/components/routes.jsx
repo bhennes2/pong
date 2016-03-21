@@ -16,6 +16,7 @@ Routes = React.createClass({
           <Route path="main"          component={MainMenu} />
           <Route path="leaders"       component={Leaders} />
           <Route path="game/new"      component={ChoosePlayerMenu} />
+          <Route path="game/guest"    component={GuestPlay} />
           <Route path="game/:id"      component={ServingMenu} />
           <Route path="game/:id/play" component={Play} />
         </Route>
