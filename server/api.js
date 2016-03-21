@@ -20,7 +20,7 @@ postRoutes.route('/challenges', function(params, req, res, next) {
 
 getRoutes.route('/last_game.json', function(params, req, res, next) {
 
-  latestGame = Games.findOne({}, {sort: {DateTime: 1, limit: 1}});
+  latestGame = Games.findOne({}, {sort: {createdAt: -1, limit: 1}});
   player1 = Players.findOne(latestGame.player1);
   player2 = Players.findOne(latestGame.player2);
 
