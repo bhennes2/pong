@@ -17,14 +17,19 @@ EndGameMessage = React.createClass({
       const game = this.props.game,
             newFirstServer = game.firstServer === game.player1 ? game.player2 : game.player1;
 
-      Meteor.call("playAgain", this.props.player1, this.props.player2, newFirstServer, (_,gameId) => {
-        this.transitionTo(`/game/${gameId}/play`);
-      });
+      if (this.props.guest){
+        this.transitionTo(`/game_guest/new`);
+      } else {
+        Meteor.call("playAgain", this.props.player1, this.props.player2, newFirstServer, (_,gameId) => {
+          this.transitionTo(`/game/${gameId}/play`);
+        });
+      }
     }
   },
 
   render() {
 
+    console.log(this.props);
     var menuItems = [
       { title: "Play Again", action: "new" },
       { title: "Main Menu", action: "main"}

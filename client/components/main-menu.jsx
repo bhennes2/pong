@@ -22,7 +22,7 @@ MainMenu = React.createClass({
 
     var menuItems = [
       { title: "Play",    action: 'play',    target: "/game/new" },
-      { title: "Guest",   action: 'guestPlay', target: "game/guest" },
+      { title: "Guest",   action: 'guestPlay', target: "game_guest/new" },
       { title: "Leaders", action: 'leaders', target: "/leaders" }
     ];
 
