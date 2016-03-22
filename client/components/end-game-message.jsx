@@ -29,7 +29,6 @@ EndGameMessage = React.createClass({
 
   render() {
 
-    console.log(this.props);
     var menuItems = [
       { title: "Play Again", action: "new" },
       { title: "Main Menu", action: "main"}
