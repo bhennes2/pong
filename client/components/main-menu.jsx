@@ -10,11 +10,9 @@ MainMenu = React.createClass({
 
   onSelect(item) {
     if (item.action === 'challenge') {
-
       Meteor.call("newGameFromChallenge", item.challenge, (_,gameId) => {
         this.transitionTo('/game/' + gameId);
       });
-
     } else {
       this.transitionTo(item.target);
     }
@@ -24,6 +22,7 @@ MainMenu = React.createClass({
 
     var menuItems = [
       { title: "Play",    action: 'play',    target: "/game/new" },
+      { title: "Guest",   action: 'guestPlay', target: "game_guest/new" },
       { title: "Leaders", action: 'leaders', target: "/leaders" }
     ];
 
