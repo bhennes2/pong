@@ -45,7 +45,7 @@ MainMenu = React.createClass({
           listens={[KeyCode.Left, KeyCode.Right]}
           onSelect={this.onSelect}
         />
-        <p className="game-credits">&copy; LaunchPad Lab 2015</p>
+        <p className="game-credits">&copy; LaunchPad Lab 2016</p>
       </div>
     );
   }
